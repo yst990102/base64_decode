@@ -15,7 +15,14 @@ export default async function handler(request, response) {
         return content; // Return content to the next .then
       });
 
-    response.status(200).send(base64_code);
+    var base64Data = base64_code.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+    var img = Buffer.from(base64Data, 'base64');
+
+    response.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': img.length
+    });
+    response.end(img);
   } catch (error) {
     console.error(`Error: ${error}`);
     response.status(500).send("An error occurred while processing the request.");
