@@ -12,11 +12,10 @@ export default async function handler(request, response) {
         return response.text();
       })
       .then(content => {
-        // console.log(content);
         return content; // Return content to the next .then
       });
 
-    response.status(200).send(`${base64_code}!`);
+    response.status(200).send(base64_code);
   } catch (error) {
     console.error(`Error: ${error}`);
     response.status(500).send("An error occurred while processing the request.");
